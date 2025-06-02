@@ -21,70 +21,99 @@
 
 % 目录页
 \begin{frame}[plain]{Outlines}
-  % 目录页自定义样式
-  \setbeamercolor{background canvas}{bg=lightpurple}
-  \tableofcontents
+  \tableofcontents[hideallsubsections] %[hideallsubsections]隐藏subsection
 \end{frame}
-
 % ...existing code...
-\section{Linear Time-Invariant System (LTI) Test}
-\begin{frame}{Linear Time-Invariant System (LTI) Overview}
-  \begin{block}{Definition}
-    A Linear Time-Invariant (LTI) system is a system whose output response to an input is linear and does not change over time.
+
+\section{Transformer Model Test Page}
+\subsection{What is Transformer?}
+\begin{frame}{Introduction to Transformer}
+  \begin{block}{What is Transformer?}
+    The Transformer is a deep learning model introduced in 2017\footnote{See Vaswani et al., 2017 for details.}, which relies entirely on attention mechanisms to draw global dependencies between input and output. It has become the foundation of most modern NLP models.
   \end{block}
-  \begin{block}{Mathematical Representation}
-    The output $y(t)$ of an LTI system is given by the convolution:
+  \begin{alertblock}{Why is it Important?}
+    Transformers enable efficient parallel training and have revolutionized NLP, vision, and multimodal tasks.
+  \end{alertblock}
+  \begin{plainblock}{Fun Fact}
+    The phrase "Attention is All You Need" comes from the original Transformer paper.
+  \end{plainblock}
+\end{frame}
+
+\begin{frame}{Mathematical Formulation}
+  \begin{block}{Scaled Dot-Product Attention}
+    The core of Transformer is the attention mechanism, defined as:
     \[
-      y(t) = (x * h)(t) = \int_{-\infty}^{\infty} x(\tau) h(t-\tau) d\tau
+      \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right)V
     \]
-    where $x(t)$ is the input and $h(t)$ is the impulse response.
+    where $Q$ (queries), $K$ (keys), and $V$ (values) are projections of the input, and $d_k$ is the dimension of the keys.
   \end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Python Example: LTI System Simulation}
+\begin{frame}[fragile]{Python Example: Simple Transformer Block}
   \begin{block}{Code Example}
     \lstset{
       language=Python,
+      basicstyle=\ttfamily\small,
+      keywordstyle=\color{blue},
+      commentstyle=\color{gray},
+      stringstyle=\color{red},
+      showstringspaces=false,
+      breaklines=true,
+      frame=single,
+      backgroundcolor=\color{gray!10}
     }
     \begin{lstlisting}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.signal import lti, step
+import torch
+import torch.nn as nn
 
-system = lti([1], [1, 1])  # H(s) = 1/(s+1)
-t, y = step(system)
-plt.plot(t, y)
-plt.xlabel('Time (s)')
-plt.ylabel('Response')
-plt.title('Step Response of LTI System')
-plt.grid(True)
-plt.show()
+class SimpleSelfAttention(nn.Module):
+    def __init__(self, d_model):
+        super().__init__()
+        self.attn = nn.MultiheadAttention(d_model, num_heads=4)
+    def forward(self, x):
+        attn_output, _ = self.attn(x, x, x)
+        return attn_output
+# Example usage:
+x = torch.rand(10, 32, 64)  # (seq_len, batch, d_model)
+model = SimpleSelfAttention(64)
+y = model(x)
     \end{lstlisting}
   \end{block}
 \end{frame}
 
-\begin{frame}{LTI System Illustration}
+\begin{frame}{Transformer Architecture Diagram}
   \centering
-  \includegraphics[width=0.7\textwidth]{logo/logo.png}
-  \captionof{figure}{校徽图示}
+  \includegraphics[width=0.7\textwidth]{illustration/image.png}
+  \captionof{figure}{The architecture of the original Transformer model.}
 \end{frame}
 
-\begin{frame}{LTI System Properties Table}
-  \begin{block}{Comparison of System Properties}
-    \begin{tabularx}{\textwidth}{lcc}
+\begin{frame}{Comparison Table}
+  \begin{block}{Transformer vs. RNN vs. CNN}
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabularx}{0.8\textwidth}{lccc}
       \toprule
-      \textbf{Property} & \textbf{LTI System} & \textbf{Non-LTI System} \\
+      \footnotesize\textbf{Model} & \footnotesize\textbf{Parallel} & \footnotesize\textbf{Long-range} & \footnotesize\textbf{Application} \\
+      \footnotesize & \footnotesize & \footnotesize\textbf{Dependency} & \footnotesize \\
       \midrule
-      Linearity & Yes & Not always \\
-      Time-Invariance & Yes & Not always \\
-      Superposition & Holds & Not always \\
-      Impulse Response & Exists & Not always meaningful \\
-      Frequency Response & Well-defined & Not always \\
+      \footnotesize RNN & \footnotesize No & \footnotesize Weak & \footnotesize Sequence Modeling \\
+      \footnotesize CNN & \footnotesize Partial & \footnotesize Limited & \footnotesize Vision, Sequence \\
+      \footnotesize Transformer & \footnotesize Yes & \footnotesize Strong & \footnotesize NLP, Vision, Multimodal \\
       \bottomrule
     \end{tabularx}
   \end{block}
 \end{frame}
-% ...existing code...
+
+% 参考文献页
+\begin{frame}[allowframebreaks]{References}
+  \footnotesize
+  \begin{thebibliography}{99}
+    \bibitem{vaswani2017attention}
+      Vaswani, A., Shazeer, N., Parmar, N., et al.
+      \newblock Attention is All You Need.
+      \newblock In \emph{Advances in Neural Information Processing Systems}, 2017.
+  \end{thebibliography}
+\end{frame}
+
 
 
 % 结语（带联系方式）
@@ -98,11 +127,11 @@ plt.show()
     \end{tikzpicture}%
     \vskip0.3cm
     \small
-  \faEnvelope\ \url{zhangsan@gmail.com} \quad
+  \faEnvelope\ \url{xxxx@gmail.com} \quad
 
-  \faGithub\ \url{github.com/zhangsan} \quad
+  \faGithub\ \url{github.com/xxxx} \quad
 
-  \faPhone\ \url{(+86) 123-456-7890} \\[1cm]
+  \faPhone\ \url{(+86) 123-456-789} \\[1cm]
   \vfill
  \begin{tikzpicture}[remember picture,overlay]
     \node[anchor=south, xshift=0cm, yshift=0cm, opacity=0.25] at (current page.south) {
