@@ -1,0 +1,114 @@
+%!TEX program = xelatex
+\documentclass[10pt]{beamer}
+\usetheme{Darmstadt}
+\usecolortheme{orchid}
+\useinnertheme{rectangles}
+\usepackage{eso-pic}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{NWPU}
+
+
+\begin{document}
+
+% 封面页（带联系方式）
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% 目录页
+\begin{frame}[plain]{Outlines}
+  % 目录页自定义样式
+  \setbeamercolor{background canvas}{bg=lightpurple}
+  \tableofcontents
+\end{frame}
+
+% ...existing code...
+\section{Linear Time-Invariant System (LTI) Test}
+\begin{frame}{Linear Time-Invariant System (LTI) Overview}
+  \begin{block}{Definition}
+    A Linear Time-Invariant (LTI) system is a system whose output response to an input is linear and does not change over time.
+  \end{block}
+  \begin{block}{Mathematical Representation}
+    The output $y(t)$ of an LTI system is given by the convolution:
+    \[
+      y(t) = (x * h)(t) = \int_{-\infty}^{\infty} x(\tau) h(t-\tau) d\tau
+    \]
+    where $x(t)$ is the input and $h(t)$ is the impulse response.
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Python Example: LTI System Simulation}
+  \begin{block}{Code Example}
+    \lstset{
+      language=Python,
+    }
+    \begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import lti, step
+
+system = lti([1], [1, 1])  # H(s) = 1/(s+1)
+t, y = step(system)
+plt.plot(t, y)
+plt.xlabel('Time (s)')
+plt.ylabel('Response')
+plt.title('Step Response of LTI System')
+plt.grid(True)
+plt.show()
+    \end{lstlisting}
+  \end{block}
+\end{frame}
+
+\begin{frame}{LTI System Illustration}
+  \centering
+  \includegraphics[width=0.7\textwidth]{logo/logo.png}
+  \captionof{figure}{校徽图示}
+\end{frame}
+
+\begin{frame}{LTI System Properties Table}
+  \begin{block}{Comparison of System Properties}
+    \begin{tabularx}{\textwidth}{lcc}
+      \toprule
+      \textbf{Property} & \textbf{LTI System} & \textbf{Non-LTI System} \\
+      \midrule
+      Linearity & Yes & Not always \\
+      Time-Invariance & Yes & Not always \\
+      Superposition & Holds & Not always \\
+      Impulse Response & Exists & Not always meaningful \\
+      Frequency Response & Well-defined & Not always \\
+      \bottomrule
+    \end{tabularx}
+  \end{block}
+\end{frame}
+% ...existing code...
+
+
+% 结语（带联系方式）
+\section{The End}
+\begin{frame}{Thank You!}
+  \centering
+  \Huge{\bfseries Any Questions?} 
+  \vskip0.3cm
+    \begin{tikzpicture}[inner sep=0,outer sep=0]
+      \draw [black,line width=1.2pt,scope fading=fadetitleliner] (0,0) -- (\textwidth,0.0cm);
+    \end{tikzpicture}%
+    \vskip0.3cm
+    \small
+  \faEnvelope\ \url{zhangsan@gmail.com} \quad
+
+  \faGithub\ \url{github.com/zhangsan} \quad
+
+  \faPhone\ \url{(+86) 123-456-7890} \\[1cm]
+  \vfill
+ \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=south, xshift=0cm, yshift=0cm, opacity=0.25] at (current page.south) {
+      \includegraphics[width=\paperwidth]{logo/footbg.png} % 替换为你的图片路径
+    };
+  \end{tikzpicture}
+\end{frame}
+
+\end{document}

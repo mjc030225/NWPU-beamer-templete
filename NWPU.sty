@@ -1,0 +1,185 @@
+\ProvidesPackage{NWPU}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{xeCJK}
+\usepackage{listings}
+\lstset{
+  basicstyle=\fontfamily{lmtt}\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{red},
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible,
+  % numbers= left,
+  backgroundcolor=\color{gray!10},
+}
+\usetikzlibrary{fadings}
+\usefonttheme{serif}
+\setCJKmonofont{KaiTi}
+\captionsetup[figure]{font=footnotesize}
+
+%%%%define color
+\definecolor{lightpurple}{RGB}{150,200,255}
+\definecolor{deepblue}{RGB}{10,150,230}
+\definecolor{blockgray}{RGB}{150,180,150}
+\definecolor{footbg}{RGB}{0,255,100}
+
+%%%%color setting
+\setbeamercolor{title}{bg=,fg=black}
+\setbeamercolor{section in toc}{bg=,fg=black}
+\setbeamercolor{palette primary}{bg=lightpurple, fg=white}
+\setbeamercolor{palette secondary}{bg=lightpurple, fg=black}
+\setbeamercolor{palette tertiary}{bg=deepblue, fg=black}
+\setbeamercolor{palette quaternary}{bg=deepblue, fg=white}
+\setbeamercolor{block title}{bg=blockgray,fg=white}
+
+
+
+\setbeamerfont{normal text}{family=\sfdefault}
+\setbeamerfont{section in toc}{series= \bfseries,size=\Large}
+\setbeamerfont{frametitle}{family=\sffamily,series=\bfseries,size=\large}
+
+\setbeamertemplate{itemize items}{%
+  \tikz[baseline=-0.6ex] \draw[fill=black,draw=black] (0,0) circle (0.05cm);%
+}
+\newcommand{\shadowcirclednum}[1]{%
+  \tikz[baseline=(char.base)]{
+    \shade[ball color=black!20!white, opacity=0.8] (0,0) circle (0.65em);
+    \node[font=\bfseries\color{black}] (char) at (0,0) {#1};
+  }%
+}
+
+% 重定义目录section的显示方式
+\setbeamertemplate{section in toc}{%
+  \leavevmode%
+  \shadowcirclednum{\inserttocsectionnumber}\hspace{1em}%
+  \inserttocsection\par
+}
+
+\setbeamerfont{normal text}
+{family=\sffamily,size=\normalsize}
+% \setbeamertemplate{headline}{}
+\title{Introduction of LTI}
+\author{San Zhang}
+\institute{xxx,\\Northwestern Polytechnical University}
+\date{\today}
+\tikzfading[name=fadetitleliner, left color=transparent!100,  right color=transparent!100, middle color=transparent!0]%
+\setbeamertemplate{title page}
+{   
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south west, inner sep=0] at (current page.south west) {
+    \includegraphics[width=\paperwidth,height=\paperheight]{logo/lib.png}
+  };
+  \shade[left color=white, right color=white, opacity=0.9]
+    (current page.south west) rectangle (current page.north east);
+\end{tikzpicture}
+    
+    % 左上角插入logo
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west] at (current page.north west) {
+      \includegraphics[height=0.8cm]{logo/logo.png}
+    };
+  \end{tikzpicture}
+  \vbox{}
+  \vfill
+  \begingroup
+    \centering
+    
+    \begin{beamercolorbox}[sep=0pt,center]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    
+    \nointerlineskip%
+    \vskip0.3cm
+    \begin{tikzpicture}[inner sep=0,outer sep=0]
+      \draw [black,line width=1.2pt,scope fading=fadetitleliner] (0,0) -- (\textwidth,0.0cm);
+    \end{tikzpicture}%
+    
+    
+    \ifx\insertauthor\@empty
+    \else
+    \begin{beamercolorbox}[sep=4pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \fi
+    
+    \ifx\insertinstitute\@empty
+    \else
+    \begin{beamercolorbox}[sep=2pt,center]{institute}
+      \usebeamercolor[fg]{institute}\usebeamerfont{institute}\insertinstitute\par
+    \end{beamercolorbox}
+    \fi
+    \nointerlineskip%
+    \vskip0.1cm
+    \begin{tikzpicture}[inner sep=0,outer sep=0]
+      \draw [black,line width=1.2pt,scope fading=fadetitleliner] (0,0) -- (\textwidth,0.0cm);
+    \end{tikzpicture}%
+  
+    \ifx\insertdate\@empty
+    \else
+    \begin{beamercolorbox}[sep=0pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}
+    \fi
+    \vskip0.5em
+
+    \vfill
+  \begin{center}
+    \faPhone\ \url{(+86) 123-456-7890} \quad
+    \faEnvelope\ \url{zhangsan@gmail.com} \quad
+
+    \faGithub\ \url{github.com/zhangsan}
+  \end{center}
+    %{\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \endgroup
+  \vfill
+}
+
+
+\setbeamertemplate{footline}{
+  \leavevmode
+  \hbox{
+    \begin{beamercolorbox}[wd=1.02\paperwidth,ht=2.5ex,dp=1ex,leftskip=1em,rightskip=1.5em]{palette primary}
+    \usebeamercolor{footline}
+      \usebeamerfont{footline}
+      JC Ma --
+      \insertshorttitle\hfill \LaTeX \hfill
+      \insertframenumber{} / \inserttotalframenumber
+    \end{beamercolorbox}
+  }
+}
+
+\setbeamertemplate{frametitle}{
+\ifnum\insertframenumber>2
+  \vspace*{-0.5ex} % 适当调整负值，减小空隙
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=0.5em,rightskip=0.5em]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+    \hfill
+    \raisebox{-0.8ex}[0pt][0pt]{%
+      \includegraphics[height=4ex]{logo/background.png}
+    }
+  \end{beamercolorbox}
+  \else
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=0.5em,rightskip=0.5em]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+    \end{beamercolorbox}
+\fi
+}
+\setbeamertemplate{background}{
+  \ifnum\insertframenumber>1
+    \ifnum\insertframenumber<\inserttotalframenumber
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south east,] at (current page.south east) {
+          \includegraphics[width=0.9\paperwidth]{logo/bg.png}
+        };
+      \end{tikzpicture}
+    \fi
+  \fi
+}
